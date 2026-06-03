@@ -1,8 +1,6 @@
 import '../App.css'
 import React, { useState } from "react";
 import Header from "./Header";
-import Filter from "./Filter";
-import ItemForm from "./ItemForm";
 import ShoppingList from "./ShoppingList";
 import initialItems from "../data/items";
 
@@ -23,6 +21,7 @@ function App() {
     setItems([...items, newItem]);
   };
 
+  // Compute the filtered items here to hand over smoothly
   const displayedItems = items.filter((item) => {
     const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
     const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
@@ -32,14 +31,15 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <ItemForm onItemFormSubmit={handleItemFormSubmit} />
-      <Filter 
-        selectedCategory={selectedCategory} 
+      {/* Pass all state and state updaters down into ShoppingList */}
+      <ShoppingList 
+        items={displayedItems} 
+        selectedCategory={selectedCategory}
         onCategoryChange={handleCategoryChange}
-        search={search} 
-        onSearchChange={handleSearchChange} 
+        search={search}
+        onSearchChange={handleSearchChange}
+        onItemFormSubmit={handleItemFormSubmit}
       />
-      <ShoppingList items={displayedItems} />
     </div>
   );
 }

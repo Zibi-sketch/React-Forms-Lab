@@ -1,10 +1,29 @@
 import React from "react";
+import ItemForm from "./ItemForm";
+import Filter from "./Filter";
 import Item from "./Item";
 
-// ShoppingList should only receive the ALREADY filtered items array as a prop
-function ShoppingList({ items }) {
+function ShoppingList({ 
+  items, 
+  selectedCategory, 
+  onCategoryChange, 
+  search, 
+  onSearchChange, 
+  onItemFormSubmit 
+}) {
   return (
     <div className="ShoppingList">
+      {/* Form gets its direct execution handler */}
+      <ItemForm onItemFormSubmit={onItemFormSubmit} />
+      
+      {/* Filter gets its controlled hooks */}
+      <Filter 
+        selectedCategory={selectedCategory} 
+        onCategoryChange={onCategoryChange}
+        search={search}
+        onSearchChange={onSearchChange}
+      />
+
       <ul className="Items">
         {items.length > 0 ? (
           items.map((item) => (
