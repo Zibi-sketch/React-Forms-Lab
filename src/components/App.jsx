@@ -1,35 +1,50 @@
 import React, { useState } from "react";
-import ShoppingList from "./ShoppingList";
 import Header from "./Header";
-import itemData from "../data/items";
+import Filter from "./Filter";
+import ShoppingList from "./ShoppingList";
+import ItemForm from "./ItemForm";
+import initialItems from "../data/items"; 
 import '../App.css'
 
 function App() {
-  const [items, setItems] = useState(itemData);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("Produce");
-  const [search, setsearch] = useState("")
+  const [items, setItems] = useState(initialItems);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchText, setSearchText] = useState("");
 
-  function handleItemFormSubmit(newItem) {
-    setItems(prevItems => [...prevItems, newItem]);
-  }
+  // Handler for search text changes
+  const handleSearchChange = (newSearchText) => {
+    setSearchText(newSearchText);
+  };
 
-  function handleSearchChange(event) {
-    setsearch(event.target.value);
-  }
+  // Handler for category changes (referenced in Step 2 prompt)
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
 
-  function handleCategoryChange(event) {
-    setSelectedCategory(event.target.value);
-  }
+  // Filter items dynamically based on BOTH category and search text
+  const displayedItems = items.filter((item) => {
+    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchText.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
-  function handleDarkModeClick() {
-    setIsDarkMode((isDarkMode) => !isDarkMode);
-  }
+  // Callback to add a new item (for Step 3)
+  const handleItemFormSubmit = (newItem) => {
+    setItems([...items, newItem]);
+  };
 
   return (
-    <div className={"App " + (isDarkMode ? "dark" : "light")}>
-      <Header isDarkMode={isDarkMode} onDarkModeClick={handleDarkModeClick} />
-      <ShoppingList items={items} handleCategoryChange={handleCategoryChange} selectedCategory={selectedCategory} onSearchChange={handleSearchChange} search={search} handleSubmit={handleSubmit} onItemFormSubmit={handleItemFormSubmit} />
+    <div className="App">
+      <Header />
+      {/* Pass the state and required prop callback */}
+      <Filter 
+        selectedCategory={selectedCategory} 
+        onCategoryChange={handleCategoryChange}
+        searchText={searchText}
+        onSearchChange={handleSearchChange} 
+      />
+      <ItemForm onItemFormSubmit={handleItemFormSubmit} />
+      <ShoppingList items={displayedItems} />
     </div>
   );
 }
