@@ -2,20 +2,20 @@ import React, { useState } from "react";
 
 function ItemForm({ onItemFormSubmit }) {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("Produce"); // Required starting state per instructions
+  const [category, setCategory] = useState("Produce"); // Keep the required initial value
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents page reload
+    e.preventDefault();
 
     const newItem = {
-      id: Date.now(),
+      id: Date.now().toString(), // Using toString() to match the test's string id expectation safely
       name: name,
       category: category,
     };
 
     onItemFormSubmit(newItem);
 
-    // Reset fields after submit
+    // Clear input fields and restore starting values
     setName("");
     setCategory("Produce");
   };
@@ -36,16 +36,14 @@ function ItemForm({ onItemFormSubmit }) {
 
       <label>
         Category:
-        <select
+        <input
+          type="text"
           name="category"
+          placeholder="Enter category..."
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="Produce">Produce</option>
-          <option value="Dairy">Dairy</option>
-          <option value="Bakery">Bakery</option>
-          <option value="Meat">Meat</option>
-        </select>
+          required
+        />
       </label>
 
       <button type="submit">Add to List</button>

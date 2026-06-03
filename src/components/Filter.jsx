@@ -1,32 +1,32 @@
 import React from "react";
 
-
 function Filter({ selectedCategory, onCategoryChange, search, onSearchChange }) {
   return (
     <div className="Filter">
-      <label htmlFor="search">Search items:</label>
-      <input
-        type="text"
-        id="search"
-        name="search"
-        placeholder="Type to search..."
-        value={search} 
-        onChange={(e) => onSearchChange(e.target.value)}
-      />
+      <label>
+        Search items:
+        <input
+          type="text"
+          name="search"
+          placeholder="Search..." 
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
+        />
+      </label>
 
-      <label htmlFor="category">Filter by category:</label>
-      <select
-        id="category"
-        name="category"
-        value={selectedCategory}
-        onChange={(e) => onCategoryChange(e.target.value)}
-      >
-        <option value="All">All</option>
-        <option value="Produce">Produce</option>
-        <option value="Dairy">Dairy</option>
-        <option value="Bakery">Bakery</option>
-        <option value="Meat">Meat</option>
-      </select>
+      <label>
+        Filter by category:
+        <select
+          name="category"
+          value={selectedCategory}
+          onChange={(e) => onCategoryChange(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="Produce">Produce</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Dessert">Bakery</option>
+        </select>
+      </label>
     </div>
   );
 }
