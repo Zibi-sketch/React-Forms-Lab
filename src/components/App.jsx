@@ -1,52 +1,49 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Filter from "./Filter";
-import ShoppingList from "./ShoppingList";
 import ItemForm from "./ItemForm";
-import initialItems from "../data/items"; 
+import ShoppingList from "./ShoppingList";
+import initialItems from "../data/items";
 import '../App.css'
 
 function App() {
   const [items, setItems] = useState(initialItems);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchText, setSearchText] = useState("");
+  const [search, setSearch] = useState(""); // Matched to 'search'
 
-  // Handler for search text changes
   const handleSearchChange = (newSearchText) => {
-    setSearchText(newSearchText);
+    setSearch(newSearchText);
   };
 
-  // Handler for category changes (referenced in Step 2 prompt)
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
   };
 
-  // Filter items dynamically based on BOTH category and search text
-  const displayedItems = items.filter((item) => {
-    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-    const matchesSearch = item.name.toLowerCase().includes(searchText.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
-  // Callback to add a new item (for Step 3)
   const handleItemFormSubmit = (newItem) => {
     setItems([...items, newItem]);
   };
 
+  // Filter evaluation
+  const displayedItems = items.filter((item) => {
+    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
   return (
     <div className="App">
       <Header />
-      {/* Pass the state and required prop callback */}
+      <ItemForm onItemFormSubmit={handleItemFormSubmit} />
       <Filter 
         selectedCategory={selectedCategory} 
         onCategoryChange={handleCategoryChange}
-        searchText={searchText}
+        search={search} // Bound cleanly
         onSearchChange={handleSearchChange} 
       />
-      <ItemForm onItemFormSubmit={handleItemFormSubmit} />
       <ShoppingList items={displayedItems} />
     </div>
   );
 }
 
 export default App;
+
