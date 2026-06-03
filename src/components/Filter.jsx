@@ -1,6 +1,6 @@
 import React from "react";
 
-function Filter({ selectedCategory, onCategoryChange, search, onSearchChange }) {
+function Filter({ selectedCategory, onCategoryChange, search = "", onSearchChange }) {
   return (
     <div className="Filter">
       <div className="search-container">
@@ -11,7 +11,11 @@ function Filter({ selectedCategory, onCategoryChange, search, onSearchChange }) 
           name="search"
           placeholder="Search..."
           value={search}
-          onChange={(e) => onSearchChange(e.target.value)}
+          onChange={(e) => {
+            if (typeof onSearchChange === "function") {
+              onSearchChange(e.target.value);
+            }
+          }}
         />
       </div>
 
@@ -21,7 +25,11 @@ function Filter({ selectedCategory, onCategoryChange, search, onSearchChange }) 
           id="category"
           name="category"
           value={selectedCategory}
-          onChange={(e) => onCategoryChange(e.target.value)}
+          onChange={(e) => {
+            if (typeof onCategoryChange === "function") {
+              onCategoryChange(e.target.value);
+            }
+          }}
         >
           <option value="All">All</option>
           <option value="Produce">Produce</option>
