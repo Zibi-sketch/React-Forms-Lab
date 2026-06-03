@@ -3,20 +3,22 @@ import React from "react";
 function Filter({ selectedCategory, onCategoryChange, search, onSearchChange }) {
   return (
     <div className="Filter">
-      <label>
-        Search items:
+      <div className="search-container">
+        <label htmlFor="search">Search items:</label>
         <input
           type="text"
+          id="search"
           name="search"
-          placeholder="Search..." 
+          placeholder="Search..."
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
         />
-      </label>
+      </div>
 
-      <label>
-        Filter by category:
+      <div className="category-container">
+        <label htmlFor="category">Filter by category:</label>
         <select
+          id="category"
           name="category"
           value={selectedCategory}
           onChange={(e) => onCategoryChange(e.target.value)}
@@ -24,9 +26,10 @@ function Filter({ selectedCategory, onCategoryChange, search, onSearchChange }) 
           <option value="All">All</option>
           <option value="Produce">Produce</option>
           <option value="Dairy">Dairy</option>
-          <option value="Dessert">Bakery</option>
+          <option value="Bakery">Bakery</option>
+          <option value="Meat">Meat</option>
         </select>
-      </label>
+      </div>
     </div>
   );
 }
