@@ -3,20 +3,20 @@ import ItemForm from "./ItemForm";
 import Filter from "./Filter";
 import Item from "./Item";
 
-function ShoppingList({ items, handleCategoryChange, selectedCategory, onSearchChange, searchValue , handleSubmit}) {
+function ShoppingList({ items, handleCategoryChange, selectedCategory, onSearchChange, search , handleSubmit, onItemFormSubmit}) {
   const itemsToDisplay = items.filter((item) => {
     const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
 
-    const matchesSearch = item.name.toLowerCase().includes(searchValue.toLowerCase());
+    const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
 
     return matchesCategory && matchesSearch;
   });
 
   return (
     <div className="ShoppingList">
-      <ItemForm handleCategoryChange={handleCategoryChange} selectedCategory={selectedCategory} onSearchChange={onSearchChange} searchValue={searchValue} handleSubmit ={handleSubmit}/>
+      <ItemForm handleCategoryChange={handleCategoryChange} selectedCategory={selectedCategory} onSearchChange={onSearchChange} search={search} handleSubmit ={handleSubmit} onItemFormSubmit ={onItemFormSubmit}/>
 
-      <Filter onCategoryChange={handleCategoryChange} searchValue={searchValue} />
+      <Filter onCategoryChange={handleCategoryChange} search={search} />
 
       <ul className="Items">
         {itemsToDisplay.length > 0 ? (
