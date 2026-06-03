@@ -1,12 +1,15 @@
 import React from "react";
-import { v4 as uuid } from "uuid";
 
-function ItemForm(props) {
+function ItemForm({onSearchChange , searchValue, handleSubmit}) {
   return (
-    <form className="NewItem">
+    <form className="NewItem" onSubmit={handleSubmit}>
       <label>
         Name:
-        <input type="text" name="name" />
+        <input 
+        type="text" 
+        placeholder="Search products..." 
+        value={searchValue} 
+        onChange={onSearchChange}/>
       </label>
 
       <label>
